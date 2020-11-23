@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+app_name = 'main'
+
 def homepage(request):
     context = {"home":"active"}
     return render(request, "home.html", context)
