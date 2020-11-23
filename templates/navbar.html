@@ -10,15 +10,15 @@
             <a class="nav-link" href="{% url 'main:homepage' %}">Home <span class="sr-only">(current)</span></a>
             </li>
             {% if user.is_authenticated %}
-                <li class="nav-item {{log_out}} navbar-text" title="View profile">
+                <li class="nav-item {{profile}}" title="View profile">
                     <a class="nav-link" href="#">@{{user.username}}</a>
                 </li>
-                <li class="nav-item {{log_out}}">
-                <a class="nav-link" href="#">Logout</a>
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'main:log_out' %}">Logout</a>
                 </li>
             {% else %}
                 <li class="nav-item {{log_in}}">
-                <a class="nav-link" href="#">Login</a>
+                <a class="nav-link" href="{% url 'main:log_in' %}">Login</a>
                 </li>
             {% endif %}
             <li class="nav-item {{contact_us}}">
