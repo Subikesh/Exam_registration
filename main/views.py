@@ -27,3 +27,24 @@ def log_out(request):
     auth.logout(request)
     messages.info(request, "You have been logged out of the website.")
     return redirect('/')
+
+def register(request):
+    context = {'register': 'active'}
+    total_fee = 0
+
+    if request.method == "POST":
+        reg = Register(Student = request.user)
+        subjects = request.POST.getlist('subject')
+        print(subjects)
+        for s in subjects:
+            subject = Subject.objects.get(pk=s)
+            # Checking the maximum attempts for that subject
+            attempt = Subject_attempts.objects.filter(student=request.user).filter(subject=subject)[0]
+            if attempt.attempts > 4 and not attempt.Passed:
+                messages.error(f"You have reached the maximum attempts for {subject}.")
+                break
+            reg.Subjects.add(subject)
+            total_fee += subject.Fee
+        reg.TotalFee = total_fee
+        reg.save()
+    return render(request, 'register.html', context)

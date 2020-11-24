@@ -13,6 +13,9 @@
                 <li class="nav-item {{profile}}" title="View profile">
                     <a class="nav-link" href="#">@{{user.username}}</a>
                 </li>
+                <li class="nav-item {{register}}" title="Register">
+                    <a class="nav-link" href="{% url 'main:register' %}">Register</a>
+                </li>
                 <li class="nav-item">
                 <a class="nav-link" href="{% url 'main:log_out' %}">Logout</a>
                 </li>

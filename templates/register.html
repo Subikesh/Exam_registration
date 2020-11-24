@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-3">Register</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table class="table table-hover">
+            <thead class='thead-dark'>
+                <tr>
+                    <th> &nbsp; </th>
+                    <th> Subject Code </th>
+                    <th> Subject Name </th>
+                    <th> Date of Exam </th>
+                    <th> Duration </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" name="subject" value="ANT" />&nbsp;</td>
+                    <td> 1 </td>
+                    <td> OS </td>
+                    <td> 01/04/2012 </td>
+                    <td> 03:00:00 </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="subject" value="CA" />&nbsp;</td>
+                    <td> 2 </td>
+                    <td> CA </td>
+                    <td> 05/04/2012 </td>
+                    <td> 03:00:00 </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="subject" value="OS" />&nbsp;</td>
+                    <td> 3 </td>
+                    <td> OS </td>
+                    <td> 06/04/2012 </td>
+                    <td> 03:00:00 </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="subject" value="DAA" />&nbsp;</td>
+                    <td> 6 </td>
+                    <td> DAA </td>
+                    <td> 10/04/2012 </td>
+                    <td> 03:00:00 </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="subject" value="SE" />&nbsp;</td>
+                    <td> 7 </td>
+                    <td> SE </td>
+                    <td> 21/04/2012 </td>
+                    <td> 03:00:00 </td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="submit" class="btn btn-primary">
+    </form>
+</div>
+{% endblock %}
