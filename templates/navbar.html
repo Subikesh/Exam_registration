@@ -11,9 +11,9 @@
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item {{profile}}" title="View profile">
-                    <a class="nav-link" href="#">@{{user.username}}</a>
+                    <a class="nav-link" href="#">Profile</a>
                 </li>
-                <li class="nav-item {{register}}" title="Register">
+                <li class="nav-item {{registerPage}}" title="Register">
                     <a class="nav-link" href="{% url 'main:register' %}">Register</a>
                 </li>
                 <li class="nav-item">

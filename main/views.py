@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from main.models import Student, Subject, Subject_attempts, Register
@@ -29,17 +29,26 @@ def log_out(request):
     return redirect('/')
 
 def register(request):
-    context = {'register': 'active'}
+    context = {'registerPage': 'active'}
     total_fee = 0
-
+    student = Student.objects.get(user=request.user)
+    display_subjects = Subject.objects.filter(Semester__lte = student.Semester).filter(Department= student.Department)
+    context['subjects'] = display_subjects
+    context['user'] = request.user
+    context['student'] = student
+    
     if request.method == "POST":
         reg = Register(Student = request.user)
         subjects = request.POST.getlist('subject')
-        print(subjects)
+        reg.save()
         for s in subjects:
             subject = Subject.objects.get(pk=s)
             # Checking the maximum attempts for that subject
-            attempt = Subject_attempts.objects.filter(student=request.user).filter(subject=subject)[0]
+            try:
+                attempt = Subject_attempts.objects.filter(Student=request.user).get(Sub_code=subject.Sub_code)
+            except Subject_attempts.DoesNotExist:
+                attempt = Subject_attempts(Student = request.user, Sub_code = subject.Sub_code, attempts = 0)
+                attempt.save()
             if attempt.attempts > 4 and not attempt.Passed:
                 messages.error(f"You have reached the maximum attempts for {subject}.")
                 break
@@ -47,4 +56,29 @@ def register(request):
             total_fee += subject.Fee
         reg.TotalFee = total_fee
         reg.save()
+        return redirect(f'/register_summary/{reg.pk}')
     return render(request, 'register.html', context)
+
+def register_summary(request, reg_id):
+    context = {'registerPage': 'active'}
+    student = Student.objects.get(user=request.user)
+    reg = get_object_or_404(Register, pk= reg_id)
+    context['register'] = reg
+    context['student'] = student
+    return render(request, 'summary.html', context)
+
+def payment(request, reg_id, payed):    
+    register = get_object_or_404(Register, pk= reg_id)
+    if payed == 1:
+        register.Payed = True
+
+        for subject in register.Subjects.all():
+            attempt = Subject_attempts.objects.filter(Student=request.user).get(Sub_code=subject.Sub_code)
+            # Increment an attempt for the student on that subject
+            attempt.attempts += 1
+        messages.success(request, "Registration Successful")
+    else:
+        register.Payed = False
+        messages.error(request, "Payment failed. Try again later. The registration details are safe in your profile.")
+
+    return redirect('/')
