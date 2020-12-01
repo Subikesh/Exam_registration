@@ -28,6 +28,16 @@ def log_out(request):
     messages.info(request, "You have been logged out of the website.")
     return redirect('/')
 
+def profile(request):
+    context= {'profile': 'active'}
+    user =  request.user
+    student = Student.objects.get(user= user)    
+    context['user'] = user
+    context['student'] = student
+    reg = Register.objects.filter(Student= user)
+    context['registrations'] = reg
+    return render(request, 'profile.html', context)
+
 def register(request):
     context = {'registerPage': 'active'}
     total_fee = 0
@@ -77,8 +87,8 @@ def payment(request, reg_id, payed):
             # Increment an attempt for the student on that subject
             attempt.attempts += 1
         messages.success(request, "Registration Successful")
+        register.save()
+        return redirect('/')
     else:
-        register.Payed = False
         messages.error(request, "Payment failed. Try again later. The registration details are safe in your profile.")
-
-    return redirect('/')
+        return redirect('/profile/')

@@ -11,7 +11,7 @@
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item {{profile}}" title="View profile">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link" href="{% url 'main:profile' %}">Profile</a>
                 </li>
                 <li class="nav-item {{registerPage}}" title="Register">
                     <a class="nav-link" href="{% url 'main:register' %}">Register</a>
