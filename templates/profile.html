@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    <h1>{{user.First_name}} {{user.Last_name}}</h1>
+    <h1>{{user.first_name}} {{user.last_name}}</h1>
     <div class="row mt-3">
         <div class="col-sm-3 mb-3">Register No.</div>
         <div class="col-sm-9 mb-3">{{user.username}}</div>
@@ -17,9 +17,11 @@
         <div class="col-sm-3 mb-3">Semester</div>
         <div class="col-sm-9 mb-3">{{student.Semester}}</div>
         <div class="col-sm-12">
+            {% if registrations %}
             <h2 class="mb-3">Registrations</h2>
+            {% endif %}
             <div id="accordion">
-                {% for register in registrations %}
+                {% for register in registrations reversed %}
                 <div class="card">
                     <div class="card-header" id="heading{{register.pk}}">
                         <h5 class="mb-0">

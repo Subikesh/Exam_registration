@@ -10,7 +10,7 @@ class Student(models.Model):
     user =  models.OneToOneField(User, on_delete=models.CASCADE)
     DOB = models.DateField()
     Gender = models.CharField(max_length= 7, choices= GENDER_CHOICE, null=True)
-    Department = models.CharField(max_length= 30, choices= DEPT_CHOICE)
+    Department = models.CharField(max_length= 35, choices= DEPT_CHOICE)
     Semester = models.IntegerField()
 
     def __str__(self) -> str:

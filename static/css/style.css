@@ -1,0 +1,22 @@
+/* Toasts */
+.toasts {
+    position: absolute;
+    right: 30px;
+    top: 90px;
+}
+.toasts .toast {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+.toast.bg-success {
+    background-color: green;
+}
+.toast.bg-info {
+    background-color: blue;
+}
+.toast.bg-error {
+    background-color: red;
+}
+.toast.bg-warning {
+    background-color: rgb(218, 166, 23);
+}

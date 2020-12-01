@@ -17,7 +17,7 @@ def log_in(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, "You are successfully logged in.")
-            return redirect('/')
+            return redirect('main:homepage')
         else:
             messages.error(request, "Username or Password is incorrect.")
     return render(request, 'login.html', context)
@@ -26,13 +26,13 @@ def log_in(request):
 def log_out(request):
     auth.logout(request)
     messages.info(request, "You have been logged out of the website.")
-    return redirect('/')
+    return redirect('main:login')
 
 def profile(request):
     context= {'profile': 'active'}
     user =  request.user
+    context['user'] = user 
     student = Student.objects.get(user= user)    
-    context['user'] = user
     context['student'] = student
     reg = Register.objects.filter(Student= user)
     context['registrations'] = reg
@@ -50,6 +50,9 @@ def register(request):
     if request.method == "POST":
         reg = Register(Student = request.user)
         subjects = request.POST.getlist('subject')
+        subs = Subject.objects.filter(Semester= student.Semester).filter(Department= student.Department)
+        for sub in subs:
+            subjects.append(sub.pk)
         reg.save()
         for s in subjects:
             subject = Subject.objects.get(pk=s)
@@ -88,7 +91,7 @@ def payment(request, reg_id, payed):
             attempt.attempts += 1
         messages.success(request, "Registration Successful")
         register.save()
-        return redirect('/')
+        return redirect('main:homepage')
     else:
-        messages.error(request, "Payment failed. Try again later. The registration details are safe in your profile.")
+        messages.error(request, "Payment failed. Try again later.")
         return redirect('/profile/')
