@@ -20,3 +20,20 @@
 .toast.bg-warning {
     background-color: rgb(218, 166, 23);
 }
+.loaderdiv{
+    visibility: visible;
+    width: 300px;
+    margin: auto;
+}
+.loaderdiv img{
+    
+    padding-left: 40px;
+}
+
+
+/* #loaderdiv p{
+    
+    
+    
+    text-align: center;
+} */

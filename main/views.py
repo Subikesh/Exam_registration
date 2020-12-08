@@ -80,7 +80,8 @@ def register_summary(request, reg_id):
     context['student'] = student
     return render(request, 'summary.html', context)
 
-def payment(request, reg_id, payed):    
+def payment(request, reg_id, payed):
+    context = {"payed":payed}    
     register = get_object_or_404(Register, pk= reg_id)
     if payed == 1:
         register.Payed = True
@@ -89,12 +90,8 @@ def payment(request, reg_id, payed):
             attempt = Subject_attempts.objects.filter(Student=request.user).get(Sub_code=subject.Sub_code)
             # Increment an attempt for the student on that subject
             attempt.attempts += 1
-        messages.success(request, "Registration Successful")
         register.save()
-        return redirect('main:profile')
-    else:
-        messages.error(request, "Payment failed. Try again later.")
-        return redirect('main:profile')
+    return render(request, 'payment.html', context)
 
 def del_reg(request, reg_id):
     regn = get_object_or_404(Register, pk = reg_id)
