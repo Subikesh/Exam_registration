@@ -26,7 +26,7 @@ def log_in(request):
 def log_out(request):
     auth.logout(request)
     messages.info(request, "You have been logged out of the website.")
-    return redirect('main:login')
+    return redirect('main:log_in')
 
 def profile(request):
     context= {'profile': 'active'}
