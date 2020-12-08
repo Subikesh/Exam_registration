@@ -31,9 +31,10 @@
                             Registration {{register.RegDate |date:"d/m/Y"}} 
                         </button>
                         {% if register.Payed is True %}
-                            <span class="float-right badge badge-success">Payed</span>
+                            <span class="float-right badge badge-success mr-2">Payed</span>
                             {% else %}
-                            <span class="float-right badge badge-danger">Not Payed</span>
+                            <a href="{% url 'main:delete_regn' register.pk %}" class="float-right btn btn-danger mr-2">Delete</a>
+                            <span class="float-right badge badge-danger mr-2">Not Payed</span>
                             {% endif %}
                         </h5>
                     </div>
