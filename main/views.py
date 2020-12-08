@@ -91,7 +91,12 @@ def payment(request, reg_id, payed):
             attempt.attempts += 1
         messages.success(request, "Registration Successful")
         register.save()
-        return redirect('main:homepage')
+        return redirect('main:profile')
     else:
         messages.error(request, "Payment failed. Try again later.")
-        return redirect('/profile/')
+        return redirect('main:profile')
+
+def del_reg(request, reg_id):
+    regn = get_object_or_404(Register, pk = reg_id)
+    regn.delete()
+    return redirect("main:profile")
