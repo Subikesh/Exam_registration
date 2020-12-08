@@ -1,6 +1,5 @@
 from main.models import Student, Subject_attempts, Subject, Register
 from django.contrib.auth.models import User
-student = Student(user = User.objects.get(username='subikesh'), DOB = '2000-02-14', Gender = 'Male', Semester = 5)
 
 subjects = [
     ['Physics', 'PH1234', 'CSE', 1, '2020-12-10', '350'], 
