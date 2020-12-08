@@ -92,4 +92,8 @@ def payment(request, reg_id, payed):
             attempt.attempts += 1
         register.save()
     return render(request, 'payment.html', context)
-   
+
+def del_reg(request, reg_id):
+    regn = get_object_or_404(Register, pk = reg_id)
+    regn.delete()
+    return redirect("main:profile")

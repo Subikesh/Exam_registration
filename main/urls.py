@@ -12,5 +12,6 @@ urlpatterns = [
     path("register_summary/<int:reg_id>", views.register_summary, name="summary"),
     path("payment/<int:reg_id>/<int:payed>", views.payment, name="payment"),
     path("profile/", views.profile, name="profile"),
+    path("delete_regn/<int:reg_id>", views.del_reg, name="delete_regn"),
 
 ]
