@@ -76,9 +76,11 @@ WSGI_APPLICATION = 'exam_registration.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'ExamRegistration',
-        
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Exam_regn',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost'
     }
 }
 
