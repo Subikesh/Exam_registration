@@ -91,7 +91,8 @@ def payment(request, reg_id, payed):
             attempt.attempts += 1
         messages.success(request, "Registration Successful")
         register.save()
-        return redirect('main:homepage')
+        return render(request, 'payment.html', context)
     else:
         messages.error(request, "Payment failed. Try again later.")
-        return redirect('/profile/')
+        return render(request, 'payment.html', context)
+
