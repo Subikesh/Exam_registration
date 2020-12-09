@@ -56,6 +56,9 @@ def register(request):
     if request.method == "POST":
         reg = Register(Student = request.user)
         subjects = request.POST.getlist('subject')
+        if not subjects:
+            messages.warning(request, "Please select atleast one subject.")
+            return redirect()
         subs = display_subjects.filter(Semester= student.Semester).filter(Department= student.Department)
         for sub in subs:
             subjects.append(sub.pk)
@@ -105,7 +108,9 @@ def payment(request, reg_id, paid):
             # Increment an attempt for the student on that subject
             attempt.attempts += 1
         register.save()
-    return render(request, 'payment.html', context)
+        return render(request, 'payment.html', context)
+    messages.error(request, "Your registration is cancelled. You can continue payment from profile.")
+    return redirect("main:profile")
 
 def del_reg(request, reg_id):
     regn = get_object_or_404(Register, pk = reg_id)
