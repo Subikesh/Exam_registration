@@ -78,13 +78,17 @@ def register_summary(request, reg_id):
     reg = get_object_or_404(Register, pk= reg_id)
     context['register'] = reg
     context['student'] = student
+
+    # Subjects which are not selected for this registration
+    subs = Subject.objects.filter(Semester__lte = student.Semester).filter(Department= student.Department).exclude(pk__in= reg.Subjects.all())
+    context['non_reg_subs'] = subs
     return render(request, 'summary.html', context)
 
-def payment(request, reg_id, payed):
-    context = {"payed":payed}    
+def payment(request, reg_id, paid):
+    context = {"paid":paid}    
     register = get_object_or_404(Register, pk= reg_id)
-    if payed == 1:
-        register.Payed = True
+    if paid == 1:
+        register.Paid = True
 
         for subject in register.Subjects.all():
             attempt = Subject_attempts.objects.filter(Student=request.user).get(Sub_code=subject.Sub_code)

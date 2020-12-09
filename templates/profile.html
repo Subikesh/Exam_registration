@@ -25,18 +25,14 @@
             <div id="accordion">
                 {% for register in registrations reversed %}
                 <div class="card">
-                    <div class="card-header" id="heading{{register.pk}}">
-                        <h5 class="mb-0">
-                        <button class="btn collapsed" data-toggle="collapse" data-target="#collapse{{register.pk}}" aria-expanded="false" aria-controls="collapse{{register.pk}}">
-                            Registration {{register.RegDate |date:"d/m/Y"}} 
-                        </button>
+                    <div class="card-header accordion-card collapsed" id="heading{{register.pk}}" data-toggle="collapse" data-target="#collapse{{register.pk}}" aria-expanded="false" aria-controls="collapse{{register.pk}}">
+                        Registration {{register.RegDate |date:"d/m/Y"}} 
                         {% if register.Payed is True %}
                             <span class="float-right badge badge-success mr-2">Payed</span>
                             {% else %}
-                            <a href="{% url 'main:delete_regn' register.pk %}" class="float-right btn btn-danger mr-2">Delete</a>
+                            <a href="{% url 'main:delete_regn' register.pk %}" class="btn btn-danger ml-2 mr-2">Delete</a>
                             <span class="float-right badge badge-danger mr-2">Not Payed</span>
-                            {% endif %}
-                        </h5>
+                            {% endif %}                        
                     </div>
                 
                     <div id="collapse{{register.pk}}" class="collapse" aria-labelledby="heading{{register.pk}}" data-parent="#accordion">
