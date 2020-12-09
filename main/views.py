@@ -42,7 +42,13 @@ def register(request):
     context = {'registerPage': 'active'}
     total_fee = 0
     student = Student.objects.get(user=request.user)
-    display_subjects = Subject.objects.filter(Semester__lte = student.Semester).filter(Department= student.Department)
+    
+    # Display all the subjects which are not registered before
+    reg_subs = Register.objects.filter(Student = request.user).values('Subjects')
+    display_subjects = Subject.objects.filter(Semester__lte = student.Semester).\
+        filter(Department= student.Department).\
+        exclude(pk__in= reg_subs)
+
     context['subjects'] = display_subjects
     context['user'] = request.user
     context['student'] = student
@@ -50,7 +56,7 @@ def register(request):
     if request.method == "POST":
         reg = Register(Student = request.user)
         subjects = request.POST.getlist('subject')
-        subs = Subject.objects.filter(Semester= student.Semester).filter(Department= student.Department)
+        subs = display_subjects.filter(Semester= student.Semester).filter(Department= student.Department)
         for sub in subs:
             subjects.append(sub.pk)
         reg.save()
@@ -80,7 +86,11 @@ def register_summary(request, reg_id):
     context['student'] = student
 
     # Subjects which are not selected for this registration
-    subs = Subject.objects.filter(Semester__lte = student.Semester).filter(Department= student.Department).exclude(pk__in= reg.Subjects.all())
+    reg_subs = Register.objects.filter(Student = request.user).values('Subjects')
+    subs = Subject.objects.filter(Semester__lte = student.Semester).\
+        filter(Department= student.Department).\
+        exclude(pk__in= reg_subs).\
+        exclude(pk__in= reg.Subjects.all())
     context['non_reg_subs'] = subs
     return render(request, 'summary.html', context)
 
