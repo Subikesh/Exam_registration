@@ -15,6 +15,9 @@
         <div class="col-sm-3 mb-3">Semester</div>
         <div class="col-sm-9 mb-3">{{student.Semester}}</div>
     </div>
+    {% if subjects.count == 0 %}
+    <strong>You have already registered all the subjects applicable.</strong>
+    {% else %}
     <form action="" method="POST">
         {% csrf_token %}
         <table class="table table-hover">
@@ -52,5 +55,6 @@
         </table>
         <input type="submit" class="btn btn-primary">
     </form>
+    {% endif %}
 </div>
 {% endblock %}

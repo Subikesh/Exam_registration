@@ -42,4 +42,4 @@ class Register(models.Model):
     RegDate = models.DateField(auto_now_add=True)
     TotalFee = models.FloatField(null=True)
     Subjects = models.ManyToManyField(Subject)
-    Payed = models.BooleanField(default=False)
+    Paid = models.BooleanField(default=False)
