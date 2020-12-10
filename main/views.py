@@ -56,12 +56,12 @@ def register(request):
     if request.method == "POST":
         reg = Register(Student = request.user)
         subjects = request.POST.getlist('subject')
-        if not subjects:
-            messages.warning(request, "Please select atleast one subject.")
-            return redirect()
         subs = display_subjects.filter(Semester= student.Semester).filter(Department= student.Department)
         for sub in subs:
             subjects.append(sub.pk)
+        if not subjects:
+            messages.warning(request, "Please select atleast one subject.")
+            return redirect("main:register")
         reg.save()
         for s in subjects:
             subject = Subject.objects.get(pk=s)
@@ -98,9 +98,9 @@ def register_summary(request, reg_id):
     return render(request, 'summary.html', context)
 
 def payment(request, reg_id, paid):
-    context = {"paid":paid}    
-    register = get_object_or_404(Register, pk= reg_id)
+    context = {"paid": paid}    
     if paid == 1:
+        register = get_object_or_404(Register, pk= reg_id)
         register.Paid = True
 
         for subject in register.Subjects.all():
@@ -108,7 +108,10 @@ def payment(request, reg_id, paid):
             # Increment an attempt for the student on that subject
             attempt.attempts += 1
         register.save()
-        return render(request, 'payment.html', context)
+        context['register'] = register
+        return render(request, 'bank.html', context)
+    elif paid == 2:
+        return render(request, "payment.html")
     messages.error(request, "Your registration is cancelled. You can continue payment from profile.")
     return redirect("main:profile")
 
@@ -116,3 +119,4 @@ def del_reg(request, reg_id):
     regn = get_object_or_404(Register, pk = reg_id)
     regn.delete()
     return redirect("main:profile")
+    
