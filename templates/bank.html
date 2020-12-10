@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/3.0.0/jquery.payment.min.js"></script>
+<div class="padding">
+    <div class="row">
+        <div class="container d-flex justify-content-center">
+            <div class="col-md-6 col-sm-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span>CREDIT/DEBIT PAYMENT</span>
+                            </div>
+                            <div class="col-md-6 text-right" style="margin-top: -5px;">
+                                <img src="https://img.icons8.com/color/36/000000/visa.png"> 
+                                <img src="https://img.icons8.com/color/36/000000/mastercard.png"> 
+                                <img src="https://img.icons8.com/color/36/000000/amex.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="height: 350px;">
+                        <form action="{% url 'main:payment' register.pk 2 %}">
+                            <div class="form-group">
+                                <label for="cc-number" class="control-label">CARD NUMBER</label>
+                                <input type="tel" id="cc-number" class="input-lg form-control cc-number" 
+                                autocomplete="cc-number" placeholder="---- ---- ---- ----" name="" required />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label">CARD EXPIRY</label>
+                                        <input type="tel" id="cc-exp" class="input-lg form-control cc-exp" 
+                                        autocomplete="cc-exp" placeholder="--/--" name="" required>
+            
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="cc-cvc" class="control-label">CARD CVC</label>
+                                        <input type="tel" id="cc-cvc" class="input-lg form-control cc-cvc" 
+                                        autocomplete="off" placeholder="---" name="" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="numeric" class="control-label"> HOLDER NAME</label>
+                                <input type="text" class="input-lg form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary mr-1"> Make Payment </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

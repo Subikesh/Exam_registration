@@ -23,6 +23,9 @@ class Subject_attempts(models.Model):
     Passed = models.BooleanField(default= False)
     attempts = models.IntegerField(default=0)
 
+    def __str__(self) -> str:
+        return f"{self.Student} {self.Sub_code}"
+
 class Subject(models.Model):
     DEPT_CHOICE = [('CSE', 'CSE'), ('Mechanical', 'Mech'), ('IT', 'IT'), ('ECE', 'ECE')]
 
@@ -43,3 +46,6 @@ class Register(models.Model):
     TotalFee = models.FloatField(null=True)
     Subjects = models.ManyToManyField(Subject)
     Paid = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f"{self.Student}, {self.pk}"
