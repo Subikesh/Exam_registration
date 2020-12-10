@@ -5,6 +5,25 @@ from main.models import Student, Subject, Subject_attempts, Register
 
 def homepage(request):
     context = {"home":"active"}
+
+    # Department filter
+    dep = request.GET.get('dept', "CSE")
+    subjects = Subject.objects.filter(Department = dep)
+    context['dept'] = dep
+
+    # Semester filter
+    sem = request.GET.get('sem', 0)
+    if int(sem) != 0:
+        subjects = subjects.filter(Semester = sem)
+        context['sem'] = sem
+    
+    sem_list = []
+    for i in range(1, 9):
+        subs = subjects.filter(Semester= i)
+        sem_list.append(subs)
+    context['sem_list'] = sem_list
+    
+    context['subjects'] = subjects
     return render(request, "home.html", context)
 
 # Login for the username and password
@@ -119,4 +138,3 @@ def del_reg(request, reg_id):
     regn = get_object_or_404(Register, pk = reg_id)
     regn.delete()
     return redirect("main:profile")
-    
