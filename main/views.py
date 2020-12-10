@@ -5,17 +5,24 @@ from main.models import Student, Subject, Subject_attempts, Register
 
 def homepage(request):
     context = {"home":"active"}
-    # sem_list = []
-    # for i in range(1, 9):
-    #     subjects = Subject.objects.filter(Semester= i)
-    #     sem_list.append(subjects)
-    #     context['sem_list'] = sem_list
+
+    # Department filter
     dep = request.GET.get('dept', "CSE")
     subjects = Subject.objects.filter(Department = dep)
+    context['dept'] = dep
+
+    # Semester filter
     sem = request.GET.get('sem', 0)
     if int(sem) != 0:
         subjects = subjects.filter(Semester = sem)
-    print(subjects)
+        context['sem'] = sem
+    
+    sem_list = []
+    for i in range(1, 9):
+        subs = subjects.filter(Semester= i)
+        sem_list.append(subs)
+    context['sem_list'] = sem_list
+    
     context['subjects'] = subjects
     return render(request, "home.html", context)
 
