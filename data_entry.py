@@ -105,6 +105,7 @@ for subject in subjects:
 users = [
     ['310618104102', 'sudharshan@gmail.com', '13dec2000', 'Sudharshanam', ''], ['2000-12-13', 'Male', 'CSE', 5],
     ['310618104130', 'abcd@gmail.com', '01jan2000', 'ABC', ''], ['2000-12-31', 'Female', 'CSE', 3],
+    ['310618104121', 'abcd@gmail.com', '01jan2000', 'New User', ''], ['2000-12-01', 'Male', 'IT', 4],
 ]
 
 for i in range(0, len(users), 2):
