@@ -20,6 +20,17 @@
 .toast.bg-warning {
     background-color: rgb(218, 166, 23);
 }
+/* Toasts ends */
+
+/* Login page */
+#login-page {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 10vh;
+}
+/* Login page ends */
+
+/* Payment loading page */
 .loaderdiv{
     visibility: visible;
     width: 300px;
@@ -29,11 +40,4 @@
     
     padding-left: 40px;
 }
-
-
-/* #loaderdiv p{
-    
-    
-    
-    text-align: center;
-} */
+/* Payment loading page ends */
