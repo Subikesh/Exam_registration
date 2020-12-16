@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from main.models import Student, Subject, Subject_attempts, Register
+from django.db.models import Q
 
 def homepage(request):
     context = {"home":"active"}
@@ -17,6 +18,13 @@ def homepage(request):
         subjects = subjects.filter(Semester = sem)
         context['sem'] = sem
     
+    # Subject name filter
+    name = request.GET.get('name', '')
+    if name:
+        print(name)
+        subjects = subjects.filter(Q(Name__icontains = name) | Q(Sub_code__icontains = name))
+        context['search'] = name
+
     sem_list = []
     for i in range(1, 9):
         subs = subjects.filter(Semester= i)
@@ -66,7 +74,10 @@ def register(request):
     reg_subs = Register.objects.filter(Student = request.user).values('Subjects')
     display_subjects = Subject.objects.filter(Semester__lte = student.Semester).\
         filter(Department= student.Department).\
-        exclude(pk__in= reg_subs)
+        exclude(pk__in= reg_subs).\
+        exclude(Sub_code__in = Subject_attempts.objects.\
+            filter(Student = request.user).\
+            filter(Passed = True).values('Sub_code'))
 
     context['subjects'] = display_subjects
     context['user'] = request.user
@@ -112,6 +123,9 @@ def register_summary(request, reg_id):
     subs = Subject.objects.filter(Semester__lte = student.Semester).\
         filter(Department= student.Department).\
         exclude(pk__in= reg_subs).\
+        exclude(Sub_code__in = Subject_attempts.objects.\
+            filter(Student = request.user).\
+            filter(Passed = True).values('Sub_code')).\
         exclude(pk__in= reg.Subjects.all())
     context['non_reg_subs'] = subs
     return render(request, 'summary.html', context)
