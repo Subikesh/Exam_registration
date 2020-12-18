@@ -18,10 +18,6 @@ subjects = [
     ['Computer Architecture', 'CS8452', 'CSE', 4, '2020-12-12', '350'],
     ['Software Engineering', 'CS8453', 'CSE', 4, '2020-12-14', '350'],
 
-    ['Object Oriented Analysis and Design', 'CS8551', 'CSE', 5, '2020-12-10', '350'],
-    ['Theory Of Computation', 'CS8552', 'CSE', 5, '2020-12-12', '350'],
-    ['Computer Networks', 'CS8553', 'CSE', 5, '2020-12-14', '350'],
-
     ['Mobile Computing', 'CS8651', 'CSE', 6, '2020-12-10', '350'],
     ['Internet Programming', 'CS8652', 'CSE', 6, '2020-12-12', '350'],
     ['Distributed Systems', 'CS8653', 'CSE', 6, '2020-12-14', '350'],
@@ -36,7 +32,6 @@ subjects = [
     ['Engineering Physics 1', 'PH8151', 'IT', 1, '2020-12-10', '350'],
     ['Engineering Chemistry 1', 'CH8151', 'IT', 1, '2020-12-12', '350'],
     ['Problem Solving Using Python', 'CS8151', 'IT', 1, '2020-12-14', '350'],
-
 
     ['Engineering Physics 2', 'PH8251', 'IT', 2, '2020-12-10', '350'],
     ['Engineering Chemistry 2', 'CH8251', 'IT', 2, '2020-12-12', '350'],
