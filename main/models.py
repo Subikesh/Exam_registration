@@ -7,7 +7,7 @@ class Student(models.Model):
     DEPT_CHOICE = [('CSE', 'CSE'), ('Mechanical', 'Mech'), ('IT', 'IT'), ('ECE', 'ECE')]
 
     # Extending the user model to add additional details of students
-    user =  models.OneToOneField(User, on_delete=models.CASCADE)
+    user =  models.OneToOneField(User, on_delete=models.CASCADE, related_name= 'student')
     DOB = models.DateField()
     Gender = models.CharField(max_length= 7, choices= GENDER_CHOICE, null=True)
     Department = models.CharField(max_length= 35, choices= DEPT_CHOICE)
@@ -18,7 +18,7 @@ class Student(models.Model):
 
 # Stores objects for number of attempts done on each subjects
 class Subject_attempts(models.Model):
-    Student = models.ForeignKey(User, on_delete=models.CASCADE)
+    Student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='attempts')
     Sub_code = models.CharField(max_length=10)
     Passed = models.BooleanField(default= False)
     attempts = models.IntegerField(default=0)
@@ -41,7 +41,7 @@ class Subject(models.Model):
         return self.Name
 
 class Register(models.Model):
-    Student = models.ForeignKey(User, on_delete=models.CASCADE)
+    Student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registrations')
     RegDate = models.DateField(auto_now_add=True)
     TotalFee = models.FloatField(null=True)
     Subjects = models.ManyToManyField(Subject)
