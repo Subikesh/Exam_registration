@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-3">Register</h1>
+    <div class="row">
+        <div class="col-sm-3 mb-3">Name</div>
+        <div class="col-sm-9 mb-3">{{user.first_name}}</div>
+        <div class="col-sm-3 mb-3">Register No.</div>
+        <div class="col-sm-9 mb-3">{{user.username}}</div>
+        <div class="col-sm-3 mb-3">Email</div>
+        <div class="col-sm-9 mb-3">{{user.email}}</div>
+        <div class="col-sm-3 mb-3">Department</div>
+        <div class="col-sm-9 mb-3">{{student.Department}}</div>
+        <div class="col-sm-3 mb-3">Semester</div>
+        <div class="col-sm-9 mb-3">{{student.Semester}}</div>
+    </div>
+    {% if subjects.count == 0 %}
+    <strong>You have already registered all the subjects applicable.</strong>
+    {% else %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table class="table table-hover">
+            <thead class='thead-dark'>
+                <tr>
+                    <th> &nbsp; </th>
+                    <th> Sl.no </th>
+                    <th> Subject Code </th>
+                    <th> Subject Name </th>
+                    <th> Semester </th>
+                    <th> Date of Exam </th>
+                    <th> Fee </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subject in subjects %}
+
+                <tr class="subject-row">
+                    <td>
+                        {% if subject.Semester < student.Semester %}
+                        <input type="checkbox" name="subject" value="{{subject.pk}}" />
+                        {% endif %}
+                        &nbsp;</td>
+                    <td> {{forloop.counter}} </td>
+                    <td> {{subject.Sub_code}} </td>
+                    <td> {{subject.Name}} </td>
+                    <td> {{subject.Semester}} </td>
+                    <td> {{subject.DateofExam |date:"D, d M Y"}} </td>
+                    <td> &#8377;{{subject.Fee}} </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+        <input type="submit" class="btn btn-primary">
+    </form>
+    {% endif %}
+</div>
+{% endblock %}

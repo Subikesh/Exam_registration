@@ -1,0 +1,25 @@
+
+{% extends 'main/base.html'  %}
+{% load static %}
+
+{% block content %}
+<script>
+           
+    setTimeout(function(){
+        document.getElementsByClassName("loaderimg")[0].src="{% static 'okay-1.1s-122px.svg' %}";
+        document.getElementsByClassName("loadertext")[0].innerHTML="Your Transaction is Completed!";
+    }, 3000);
+
+    setTimeout(function(){
+       window.location.href = "{% url 'main:profile' %}";
+    }, 4000);
+    
+ </script>
+<div class="loaderdiv">
+    <img class="loaderimg" src="{% static 'Infinity-1.4s-200px.svg' %}" />
+    <p class="loadertext">Your Transaction is getting Processed....</p>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <h1 class='mb-3'>Registration Summary</h1>
+        <div class="row">
+            <div class="col-sm-3 mb-3">Name</div>
+            <div class="col-sm-9 mb-3">{{register.Student.first_name}}</div>
+            <div class="col-sm-3 mb-3">Register No.</div>
+            <div class="col-sm-9 mb-3">{{register.Student.username}}</div>
+            <div class="col-sm-3 mb-3">Email</div>
+            <div class="col-sm-9 mb-3">{{user.email}}</div>
+            <div class="col-sm-3 mb-3">Department</div>
+            <div class="col-sm-9 mb-3">{{student.Department}}</div>
+            <div class="col-sm-3 mb-3">Semester</div>
+            <div class="col-sm-9 mb-3">{{student.Semester}}</div>
+            <div class="col-sm-12">
+                <h3 class="mt-3">Registered Subjects</h3>
+                <p>These are the subjects selected for your registration:</p>
+                <table class="table table-hover">
+                    <thead class='thead-dark'>
+                        <tr>
+                            <th> Sl.no </th>
+                            <th> Subject Code </th>
+                            <th> Subject Name </th>
+                            <th> Semester </th>
+                            <th> Date of Exam </th>
+                            <th> Fee </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for subject in register.Subjects.all %}
+
+                        <tr>
+                            <td> {{forloop.counter}} </td>
+                            <td> {{subject.Sub_code}} </td>
+                            <td> {{subject.Name}} </td>
+                            <td> {{subject.Semester}} </td>
+                            <td> {{subject.DateofExam |date:"D, d M Y"}} </td>
+                            <td> &#8377;{{subject.Fee}} </td>
+                        </tr>
+        
+                        {% endfor %}
+                        <tr>
+                            <td> &nbsp; </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Total Fee:</td>
+                            <td> &#8377;{{register.TotalFee}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% if non_reg_subs.count != 0 %}
+                <h3>Not Registered Subjects</h3>
+                <p>Please ensure that the following subjects are not selected for your current registration.</p>
+                <table class="table table-hover">
+                    <thead class='thead-dark'>
+                        <tr>
+                            <th> Sl.no </th>
+                            <th> Subject Code </th>
+                            <th> Subject Name </th>
+                            <th> Semester </th>
+                            <th> Date of Exam </th>
+                            <th> Fee </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for subject in non_reg_subs %}
+
+                        <tr>
+                            <td> {{forloop.counter}} </td>
+                            <td> {{subject.Sub_code}} </td>
+                            <td> {{subject.Name}} </td>
+                            <td> {{subject.Semester}} </td>
+                            <td> {{subject.DateofExam |date:"D, d M Y"}} </td>
+                            <td> &#8377;{{subject.Fee}} </td>
+                        </tr>
+        
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+            <a href="{% url 'main:payment' register.pk 1 %}" class="btn btn-primary mr-1"> Make Payment </a>
+            <a href="{% url 'main:payment' register.pk 0 %}" class="btn btn-danger mr-1"> Cancel Payment </a>
+        </div>
+    </div>
+
+{% endblock %}
