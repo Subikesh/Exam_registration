@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'main/base.html' %}
 
 {% block content %}
 <div class="container">
@@ -35,7 +35,7 @@
             <tbody>
                 {% for subject in subjects %}
 
-                <tr>
+                <tr class="subject-row">
                     <td>
                         {% if subject.Semester < student.Semester %}
                         <input type="checkbox" name="subject" value="{{subject.pk}}" />

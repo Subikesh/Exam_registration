@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from main.models import Student, Subject, Subject_attempts, Register
 from django.db.models import Q
+from django.views import generic
 
 def homepage(request):
     context = {"home":"active"}
@@ -32,7 +33,7 @@ def homepage(request):
     context['sem_list'] = sem_list
     
     context['subjects'] = subjects
-    return render(request, "home.html", context)
+    return render(request, "main/home.html", context)
 
 # Login for the username and password
 def log_in(request):
@@ -47,7 +48,7 @@ def log_in(request):
             return redirect('main:homepage')
         else:
             messages.error(request, "Username or Password is incorrect.")
-    return render(request, 'login.html', context)
+    return render(request, 'main/login.html', context)
 
 # Logout the current user
 def log_out(request):
@@ -55,15 +56,19 @@ def log_out(request):
     messages.info(request, "You have been logged out of the website.")
     return redirect('main:log_in')
 
-def profile(request):
-    context= {'profile': 'active'}
-    user =  request.user
-    context['user'] = user 
-    student = Student.objects.get(user= user)    
-    context['student'] = student
-    reg = Register.objects.filter(Student= user)
-    context['registrations'] = reg
-    return render(request, 'profile.html', context)
+class profile(generic.DetailView):
+    model = User
+    template_name = 'main/profile.html'
+
+    # Replacing user pk with request.user
+    def get_object(self):
+        return self.request.user
+
+    # Add extra context as active for navbar
+    def get_context_data(self, **kwargs):
+        context = super(profile, self).get_context_data(**kwargs)
+        context['profile'] = 'active'
+        return context
 
 def register(request):
     context = {'registerPage': 'active'}
@@ -109,7 +114,7 @@ def register(request):
         reg.TotalFee = total_fee
         reg.save()
         return redirect(f'/register_summary/{reg.pk}')
-    return render(request, 'register.html', context)
+    return render(request, 'main/register.html', context)
 
 def register_summary(request, reg_id):
     context = {'registerPage': 'active'}
@@ -128,7 +133,7 @@ def register_summary(request, reg_id):
             filter(Passed = True).values('Sub_code')).\
         exclude(pk__in= reg.Subjects.all())
     context['non_reg_subs'] = subs
-    return render(request, 'summary.html', context)
+    return render(request, 'main/summary.html', context)
 
 def payment(request, reg_id, paid):
     context = {"paid": paid}    
@@ -142,9 +147,9 @@ def payment(request, reg_id, paid):
             attempt.attempts += 1
         register.save()
         context['register'] = register
-        return render(request, 'bank.html', context)
+        return render(request, 'main/bank.html', context)
     elif paid == 2:
-        return render(request, "payment.html")
+        return render(request, "main/payment.html")
     messages.error(request, "Your registration is cancelled. You can continue payment from profile.")
     return redirect("main:profile")
 
