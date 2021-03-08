@@ -35,7 +35,7 @@
             <tbody>
                 {% for subject in subjects %}
 
-                <tr>
+                <tr class="subject-row">
                     <td>
                         {% if subject.Semester < student.Semester %}
                         <input type="checkbox" name="subject" value="{{subject.pk}}" />
