@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'main/base.html' %}
 
 {% block content %}
 <div class="container">
@@ -9,21 +9,21 @@
         <div class="col-sm-3 mb-3">Email</div>
         <div class="col-sm-9 mb-3">{{user.email}}</div>
         <div class="col-sm-3 mb-3">Date of Birth</div>
-        <div class="col-sm-9 mb-3">{{student.DOB |date:"d M Y"}}</div>
-        {% if student.Gender %}
+        <div class="col-sm-9 mb-3">{{user.student.DOB |date:"d M Y"}}</div>
+        {% if user.student.Gender %}
             <div class="col-sm-3 mb-3">Gender</div>
-            <div class="col-sm-9 mb-3">{{student.Gender}}</div>
+            <div class="col-sm-9 mb-3">{{user.student.Gender}}</div>
         {% endif %}
         <div class="col-sm-3 mb-3">Department</div>
-        <div class="col-sm-9 mb-3">{{student.Department}}</div>
+        <div class="col-sm-9 mb-3">{{user.student.Department}}</div>
         <div class="col-sm-3 mb-3">Semester</div>
-        <div class="col-sm-9 mb-3">{{student.Semester}}</div>
+        <div class="col-sm-9 mb-3">{{user.student.Semester}}</div>
         <div class="col-sm-12">
-            {% if registrations %}
+            {% if user.registrations %}
             <h2 class="mb-3">Registrations</h2>
             {% endif %}
             <div id="accordion">
-                {% for register in registrations reversed %}
+                {% for register in user.registrations.all reversed %}
                 <div class="card">
                     <div class="card-header accordion-card collapsed" id="heading{{register.pk}}" data-toggle="collapse" data-target="#collapse{{register.pk}}" aria-expanded="false" aria-controls="collapse{{register.pk}}">
                         Registration {{register.RegDate |date:"d/m/Y"}} 
