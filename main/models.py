@@ -16,16 +16,6 @@ class Student(models.Model):
     def __str__(self) -> str:
         return self.user.first_name
 
-# Stores objects for number of attempts done on each subjects
-class Subject_attempts(models.Model):
-    Student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='attempts')
-    Sub_code = models.CharField(max_length=10)
-    Passed = models.BooleanField(default= False)
-    attempts = models.IntegerField(default=0)
-
-    def __str__(self) -> str:
-        return f"{self.Student} {self.Sub_code}"
-
 class Subject(models.Model):
     DEPT_CHOICE = [('CSE', 'CSE'), ('Mechanical', 'Mech'), ('IT', 'IT'), ('ECE', 'ECE')]
 
@@ -39,6 +29,18 @@ class Subject(models.Model):
 
     def __str__(self) -> str:
         return self.Name
+
+# Stores objects for number of attempts done on each subjects
+class Subject_attempts(models.Model):
+    Student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='attempts')
+    Sub_code = models.CharField(max_length=10)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='attempts')
+    Passed = models.BooleanField(default= False)
+    attempts = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f"{self.Student} {self.Sub_code}"
+
 
 class Register(models.Model):
     Student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='registrations')
