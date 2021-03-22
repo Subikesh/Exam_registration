@@ -11,7 +11,7 @@ A website to let students enroll in exams online. This app is created with Djang
 
 * Learned and implemented django forms and class-based views.
 
-* Deployed and hosted it in heroku as an open-sourse app
+* Deployed and hosted it in heroku as an open-source app
 
 ## Objective
 
